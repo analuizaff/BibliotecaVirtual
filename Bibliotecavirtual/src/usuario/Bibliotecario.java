@@ -1,31 +1,25 @@
 package usuario;
 
-public class Aluno extends Usuarios {
+public class Bibliotecario extends Usuarios {
 
-	private int id;
-	private static int idAluno = 0;
+	String nome = "Bibliotecário";
+	String email = "admin@biblioteca.com";
+	String senha = "admin";
 	
-	
-	public Aluno() {
+	public Bibliotecario() {
 		super();
-		this.id = idAluno;
-		idAluno++;
-	}
-	
-	public int getId() {
-		return id;
 	}
 
 	@Override
 	public void devolucao() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void emprestimo() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
