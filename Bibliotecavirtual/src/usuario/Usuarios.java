@@ -5,6 +5,7 @@ public abstract class Usuarios {
 	String nome;
 	String email;
 	String senha;
+	String tipo; //tipo do usuário(bibliotecario, professor, aluno)
 	
 	public void setLogin(String email, String senha) {
 		this.email = email;
@@ -35,6 +36,15 @@ public abstract class Usuarios {
 		this.senha = senha;
 	}
 	
+	
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
 	public abstract void devolucao();
 	
 	public abstract void emprestimo();

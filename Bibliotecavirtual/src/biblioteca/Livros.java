@@ -2,11 +2,11 @@ package biblioteca;
 
 public class Livros {
 	
-	private String titulo, autor;
+	private String titulo, autor, edicao;
 	private int id;
 	private static int idL = 1;
 	
-	public Livros(String titulo, String autor) {
+	public Livros(String titulo, String edicao, String autor) {
 		super();
 		this.titulo = titulo;
 		this.autor = autor;
@@ -34,9 +34,17 @@ public class Livros {
 		return id;
 	}
 	
+	public String getEdicao() {
+		return edicao;
+	}
+
+	public void setEdicao(String edicao) {
+		this.edicao = edicao;
+	}
+
 	@Override
 	public String toString() {
-		String s = "ID: " + idL + "Título: " + titulo + " ; Autor: " + autor;
+		String s = "ID: " + idL + "Tï¿½tulo: " + titulo + " ; Autor: " + autor;
 		return s;
 	}
 	
