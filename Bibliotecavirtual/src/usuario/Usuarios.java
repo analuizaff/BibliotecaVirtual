@@ -1,6 +1,8 @@
 package usuario;
 
-public abstract class Usuarios {
+import biblioteca.Procedimento;
+
+public abstract class Usuarios implements Procedimento{
 	
 	String nome;
 	String email;
@@ -45,8 +47,4 @@ public abstract class Usuarios {
 		this.tipo = tipo;
 	}
 
-	public abstract void devolucao();
-	
-	public abstract void emprestimo();
-	
 }

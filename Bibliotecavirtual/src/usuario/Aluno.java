@@ -1,5 +1,7 @@
 package usuario;
 
+import biblioteca.Livros;
+
 public class Aluno extends Usuarios {
 
 	private int id;
@@ -27,5 +29,30 @@ public class Aluno extends Usuarios {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void emprestimo(Livros livro) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void devolucao(Livros livro) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Livros busca(String titulo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Livros verifica(Livros livro) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }
