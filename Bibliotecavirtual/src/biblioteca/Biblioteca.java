@@ -2,26 +2,44 @@ package biblioteca;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 
 public class Biblioteca {
  
-	List <Livros> acervo = new ArrayList <Livros>();
+	private ArrayList<Livros> acervo;
 	
-	public static void adicionarLivro(String titulo, String edicao, String autor, int id) {
-		//TODO
-		//metodo para adicionar livros ao acervo
+	//Construtor
+	public Biblioteca() {
+		//super();
+		acervo = new ArrayList<Livros>();
+	}
+	
+	//metodo para adicionar livros ao acervo
+	public void adicionarLivro(Livros livro) {
+		acervo.add(livro);
 	}
 	
 	
-
-	public static void removeLivro(String titulo, String edicao, String autor) {
-		//TODO
-		
-	}//metodo para remover livros do acervo
-
+	//metodo para remover livros do acervo
+	public void removeLivro(Livros livro) {
+		acervo.remove(livro);
+	}
 	
+	public void removeLivro(int ID) {
+		acervo.remove(ID);
+	}
 	
+	public Livros getLivro(int indice) {
+		return acervo.get(indice);
+	}
 	
+	//Funcao pra saber a quantidade de livros ja foram cadastrados
+	//E poder usar na hora de limitar o for
+	public int quantidadeLivro() {
+		return acervo.size();
+	}
 	
-	
+	//Ainda precisa implementar mas pelo que vi tem uma funcao que faz isso
+	public void ordenaAlfabeto() {
+	}
 }

@@ -1,19 +1,38 @@
 package usuario;
+import biblioteca.*;
 
-import biblioteca.Biblioteca;
-import biblioteca.Livros;
+public class Bibliotecario extends Usuarios {
 
-public class Bibliotecario extends Usuarios{
-
-	String nome = "Bibliotec�rio";
+	String nome = "Bibliotecario";
 	String email = "admin@biblioteca.com";
 	String senha = "admin";
 	
-	public Bibliotecario() {
-		super();
-		
+	Registro bibliotecario;
+	
+	public Bibliotecario(String email, String senha) {
+		super(email, senha);
 	}
 
+	
+	public void addAluno(Usuarios aluno) {
+		bibliotecario.adicionaAluno(aluno);
+	}
+	
+	public void addProfessor(Usuarios professor) {
+		bibliotecario.adicionaProfessor(professor);
+	}
+	
+	//Comentado porque acho que nao vai precisar
+	/*
+	public void removeAluno(Usuarios aluno) {
+		bibliotecario.adicionaAluno(aluno);
+	}*/
+	
+	/*
+	public void removeProfessor(Usuarios professor) {
+		bibliotecario.adicionaProfessor(professor);
+	}*/
+	
 	@Override
 	public void devolucao() {
 		// TODO Auto-generated method stub
@@ -26,11 +45,13 @@ public class Bibliotecario extends Usuarios{
 
 	}
 
+
 	@Override
 	public void emprestimo(Livros livro) {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 	@Override
 	public void devolucao(Livros livro) {
@@ -38,11 +59,13 @@ public class Bibliotecario extends Usuarios{
 		
 	}
 
+
 	@Override
 	public Livros busca(String titulo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 	@Override
 	public Livros verifica(Livros livro) {
