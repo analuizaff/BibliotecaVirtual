@@ -1,4 +1,3 @@
-
 import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -154,29 +153,33 @@ public class Principal {
 		}
 	}
 	
-	private static boolean loginAluno(int id) {
+	private static boolean loginAluno(String email, String senha) {
 		Aluno aluno;
 		boolean login = false;
 		for(int i=0;i<registroAluno.quantidadeAluno();i++) {
 			aluno = (Aluno) registroAluno.getAluno(i);
-			if(id == registroAluno.getIDAluno(aluno)) {
+			if(email.equalsIgnoreCase(registroAluno.getEmailAluno(aluno))) {
+				if(senha.equalsIgnoreCase(registroAluno.getSenhaAluno(aluno))) {
 				login = true;
 				System.out.println("Login efetuado com sucesso");
 				return login;
+				}
 			}
 		}
 		return login;
 	}
 	
-	private static boolean loginProfessor(int id) {
+	private static boolean loginProfessor(String email, String senha) {
 		Professor professor;
 		boolean login = false;
-		for(int i=0;i<registroAluno.quantidadeAluno();i++) {
+		for(int i=0;i<registroProfessor.quantidadeProfessor();i++) {
 			professor = (Professor) registroProfessor.getProfessor(i);
-			if(id == registroAluno.getIDProfessor(professor)){
+			if(email.equalsIgnoreCase(registroProfessor.getEmailProfessor(professor))) {
+				if(senha.equalsIgnoreCase(registroProfessor.getSenhaProfessor(professor))) {
 				login = true;
 				System.out.println("Login efetuado com sucesso");
 				return login;
+				}
 			}
 		}
 		return login;
@@ -263,29 +266,60 @@ public class Principal {
 			
 			switch(op) {
 			case 1:
-				System.out.println("Insira eu ID:");
-				int id = scan.nextInt();
+				System.out.println("Insira seu Email:");
+				String email = scan.next();	
+				System.out.println("Insira sua Senha:");
+				String senha = scan.next();
 				
-				if(loginAluno(id)) {
+				if(loginAluno(email, senha)) {
 					System.out.println("1- Emprestar livro");
 					System.out.println("2- Devolver livro");
 					int opcao4 = scan.nextInt();
 					break;
 				}
 				else {
-					System.out.println("ID inexistente.");
+					System.out.println("Email ou senha incorreta.");
 				}
 			break;
 			
 			case 2:
 				System.out.println("Registro Aluno");
 				adicionaAluno();
+				System.out.println("Cadastro realizado com sucesso!");
 				break;
 			}
 		break;
 		
 		case 2:
-			System.out.println("Ainda não implementado");
+			System.out.println("1- Login");
+			System.out.println("2- Registre-se");
+			op = scan.nextInt();
+			
+			switch(op) {
+			case 1:
+				System.out.println("Professor,");
+				System.out.println("Insira seu Email:");
+				String email = scan.next();	
+				System.out.println("Insira sua Senha:");
+				String senha = scan.next();
+				
+				if(loginProfessor(email, senha)) {
+					System.out.println("1- Emprestar livro");
+					System.out.println("2- Devolver livro");
+					int opcao4 = scan.nextInt();
+					break;
+				}
+				else {
+					System.out.println("Email ou senha incorreta.");
+				}
+				
+			break;
+			case 2:
+				System.out.println("Registro Professor");
+				adicionaProfessor();
+				System.out.println("Cadastro realizado com sucesso!");
+				break;
+			}
 			break;
 		case 3:
 			

@@ -54,6 +54,26 @@ public class Registro{
 		return ID;
 	}
 	
+	public String getEmailAluno(Aluno aluno) {
+		String email = aluno.getEmail();
+		return email;
+	}
+	
+	public String getSenhaAluno(Aluno aluno) {
+		String senha = aluno.getSenha();
+		return senha;
+	}
+	
+	public String getEmailProfessor(Professor professor) {
+		String email = professor.getEmail();
+		return email;
+	}
+	
+	public String getSenhaProfessor(Professor professor) {
+		String senha = professor.getSenha();
+		return senha;
+	}
+	
 	public int getIDProfessor(Professor professor) {
 		int ID = professor.getId();
 		return ID;
