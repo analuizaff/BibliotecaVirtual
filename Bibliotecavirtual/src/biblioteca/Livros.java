@@ -1,12 +1,17 @@
 package biblioteca;
 
+import usuario.Usuarios;
+import java.time.LocalDateTime;
+
 public class Livros {
 	
-	private String titulo, autor, edicao;
+	private LocalDateTime data;
+	private String titulo, autor;
 	private int id;
 	private static int idL = 1;
+	Usuarios usuario;
 	
-	public Livros(String titulo, String edicao, String autor) {
+	public Livros(String titulo, String autor) {
 		super();
 		this.titulo = titulo;
 		this.autor = autor;
@@ -34,17 +39,18 @@ public class Livros {
 		return id;
 	}
 	
-	public String getEdicao() {
-		return edicao;
+	//Proximos dois provavelmente necessario na hora de configurar o emprestimo/devolucao
+	public String getUsuarioComLivro() {
+		return usuario.getNome();
 	}
-
-	public void setEdicao(String edicao) {
-		this.edicao = edicao;
+	
+	public void setUsuarioComLivro(Usuarios usuario) {
+		this.usuario = usuario;
 	}
-
+	
 	@Override
 	public String toString() {
-		String s = "ID: " + idL + "Tï¿½tulo: " + titulo + " ; Autor: " + autor;
+		String s = "ID: " + this.getId() + "Título: " + titulo + " ; Autor: " + autor;
 		return s;
 	}
 	

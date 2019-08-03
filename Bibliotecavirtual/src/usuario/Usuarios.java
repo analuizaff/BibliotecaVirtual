@@ -2,12 +2,16 @@ package usuario;
 
 import biblioteca.Procedimento;
 
-public abstract class Usuarios implements Procedimento{
+public abstract class Usuarios implements Procedimento {
 	
 	String nome;
 	String email;
 	String senha;
-	String tipo; //tipo do usuário(bibliotecario, professor, aluno)
+	
+	public Usuarios(String email, String senha) {
+		this.email = email;
+		this.senha = senha;
+	}
 	
 	public void setLogin(String email, String senha) {
 		this.email = email;
@@ -38,13 +42,15 @@ public abstract class Usuarios implements Procedimento{
 		this.senha = senha;
 	}
 	
+	/*
+	@Override
+	public String toString() {
+		String s = "" + getEmail() + ";" + getSenha();
+		return s;
+	}*/
 	
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
+	public abstract void devolucao();
+	
+	public abstract void emprestimo();
+	
 }

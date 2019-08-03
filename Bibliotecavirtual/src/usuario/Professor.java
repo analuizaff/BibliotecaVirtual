@@ -5,7 +5,7 @@ import biblioteca.Livros;
 public class Professor extends Usuarios {
 
 	private int id;
-	private static int idProfessor = 100;
+	private static int idProfessor = 0;
 	private static int DISPONIVEL = 10;
 	
 	
