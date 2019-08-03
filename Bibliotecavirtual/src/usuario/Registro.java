@@ -5,7 +5,6 @@ public class Registro{
 	
 	private ArrayList<Aluno> registroAluno;
 	private ArrayList<Professor> registroProfessor;
-	int indiceA, indiceP;
 	
 	public Registro() {
 		registroAluno = new ArrayList<Aluno>();
@@ -14,7 +13,6 @@ public class Registro{
 	
 	public void adicionaProfessor(Usuarios professor) {
 		registroProfessor.add((Professor) professor);
-		indiceP++;
 	}
 	
 	public void adicionaAluno(Usuarios aluno) {
@@ -51,12 +49,14 @@ public class Registro{
 		return registroAluno.get(indice);
 	}
 	
-	public int getIDAluno() {
-		return indiceA;
+	public int getIDAluno(Aluno aluno) {
+		int ID = aluno.getId();
+		return ID;
 	}
 	
-	public int getIDProfessor() {
-		return indiceP;
+	public int getIDProfessor(Professor professor) {
+		int ID = professor.getId();
+		return ID;
 	}
 	
 	//Funcao pra saber a quantidade de professores ja foram cadastrados

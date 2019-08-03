@@ -2,44 +2,66 @@ package biblioteca;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Collections;
+
+import biblioteca.Livros;
+
 
 public class Biblioteca {
- 
-	private ArrayList<Livros> acervo;
+	public static List <Livros> acervo = new ArrayList <Livros>();;
+	static List <String> titulosExistentes = new ArrayList <String> (); //só guarda o titulo do meu livro apenas para verificações futuras
+	private static int contadorId = 0;
 	
-	//Construtor
-	public Biblioteca() {
-		//super();
-		acervo = new ArrayList<Livros>();
+	public static void adicionaLivro(Livros livro) throws LivroExiste{ //esse metodo adiciona um livro a minha biblioteca. esse livro n será um obj de biblioteca.
+		// a exceção livroexiste n permite adicionar um livro já existente
+		if (titulosExistentes.contains(livro.getTitulo())) {
+			for(int i=0; i < acervo.size(); i++) {
+				if(((Livros) acervo.get(i)).getEdicao() == livro.getEdicao()) {
+					throw new LivroExiste();
+				}
+			}	
+		}	
+		contadorId ++;
+		acervo.add(livro); 
+		titulosExistentes.add(livro.getTitulo());
+	}
+	public static void ListaLivros() {
+		for (int i=0; i < acervo.size(); i++) {
+			System.out.println(acervo.get(i).toString()+ "\n");
+		}
+	}
+
+	public static List<Livros> getAcervo() {
+		return acervo;
+	}
+
+	public static void setAcervo(List<Livros> acervo) {
+		Biblioteca.acervo = acervo;
+	}
+
+	public static List<String> getTitulosExistentes() {
+		return titulosExistentes;
+	}
+
+	public static void setTitulosExistentes(List<String> titulosExistentes) {
+		Biblioteca.titulosExistentes = titulosExistentes;
+	}
+
+	public static int getContadorId() {
+		return contadorId;
+	}
+
+	public static void setContadorId(int contadorId) {
+		Biblioteca.contadorId = contadorId;
 	}
 	
-	//metodo para adicionar livros ao acervo
-	public void adicionarLivro(Livros livro) {
-		acervo.add(livro);
-	}
-	
-	
-	//metodo para remover livros do acervo
-	public void removeLivro(Livros livro) {
-		acervo.remove(livro);
-	}
-	
-	public void removeLivro(int ID) {
-		acervo.remove(ID);
+	public int quantidadeLivro() {
+		return acervo.size();
 	}
 	
 	public Livros getLivro(int indice) {
 		return acervo.get(indice);
 	}
 	
-	//Funcao pra saber a quantidade de livros ja foram cadastrados
-	//E poder usar na hora de limitar o for
-	public int quantidadeLivro() {
-		return acervo.size();
-	}
-	
-	//Ainda precisa implementar mas pelo que vi tem uma funcao que faz isso
-	public void ordenaAlfabeto() {
-	}
+
 }
+

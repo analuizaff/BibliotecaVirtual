@@ -56,19 +56,36 @@ public class Principal {
 	}
 	
 	//Funcao adiciona livro
-	private static void adicionaLivro() {
-		String titulo, autor;
+	private static void adicionaLivro() throws LivroExiste {
+		String titulo, autor, edicao, code;
 		Biblioteca acervo;
 		Livros livro;
+		int quantidade;
 		System.out.println("Título:");
 		titulo = scan.next();
 		System.out.println("Autor:");
 		autor = scan.next();
 		
-		livro = new Livros(titulo, autor);
-		acervo = new Biblioteca();
+		System.out.println("Edição:");
+		edicao = scan.next();
 		
-		acervo.adicionarLivro(livro);
+		System.out.println("Codigo:");
+		code = scan.next();
+		
+		System.out.println("Quantidade de Exemplares a serem adicionados:");
+		quantidade = scan.nextInt();
+		
+		livro = new Livros(titulo, autor, edicao, code);
+		try {
+			Biblioteca.adicionaLivro(livro);
+			for(int i=0;i<quantidade;i++) {
+				livro.adicionaExemplar();
+			}
+		} catch (LivroExiste e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//acervo = new Biblioteca();
 	}
 	
 	//Funcao listar usuarios
@@ -112,6 +129,59 @@ public class Principal {
 		}
 	}
 	
+	private static void buscaLivro(String informacao) {
+		Livros livro;
+		boolean encontrado = false;
+		int i;
+		int indiceEncontrado;
+		for(i=0;i<acervo.quantidadeLivro();i++) {
+			livro = acervo.getLivro(i);
+			if(livro.getTitulo().equalsIgnoreCase(informacao)) {
+				System.out.println("Livro encontrado!");
+				System.out.println(livro.toString());
+				encontrado = true;
+				break;
+			}
+			else if(livro.getAutor().equalsIgnoreCase(informacao)) {
+				System.out.println("Livro encontrado!");
+				System.out.println(livro.toString());
+				encontrado = true;
+				break;
+			}
+		}
+		if(encontrado == false) {
+			System.out.println("Livro não encontrado!");
+		}
+	}
+	
+	private static boolean loginAluno(int id) {
+		Aluno aluno;
+		boolean login = false;
+		for(int i=0;i<registroAluno.quantidadeAluno();i++) {
+			aluno = (Aluno) registroAluno.getAluno(i);
+			if(id == registroAluno.getIDAluno(aluno)) {
+				login = true;
+				System.out.println("Login efetuado com sucesso");
+				return login;
+			}
+		}
+		return login;
+	}
+	
+	private static boolean loginProfessor(int id) {
+		Professor professor;
+		boolean login = false;
+		for(int i=0;i<registroAluno.quantidadeAluno();i++) {
+			professor = (Professor) registroProfessor.getProfessor(i);
+			if(id == registroAluno.getIDProfessor(professor)){
+				login = true;
+				System.out.println("Login efetuado com sucesso");
+				return login;
+			}
+		}
+		return login;
+	}
+	
 	//Funcao remove aluno
 	private static void removeAluno() {
 		//Vou implementar
@@ -130,10 +200,32 @@ public class Principal {
 		acervo = new Biblioteca();
 		
 		//Inserido alguns livros, alunos e usuarios pra nao ficar inserindo manual
-		Livros l1 = new Livros("A", "A");
-		Livros l2 = new Livros("B", "B");
-		acervo.adicionarLivro(l1);
-		acervo.adicionarLivro(l2);
+		
+		Livros l1 = new Livros("java para burros", "ana", "3", "j567");
+		try {
+			Biblioteca.adicionaLivro(l1);
+		} catch (LivroExiste e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		l1.adicionaExemplar();
+		l1.adicionaExemplar();
+		
+		Livros l2 = new Livros("java", "Luiza", "3", "J332.1");
+		try {
+			Biblioteca.adicionaLivro(l2);
+		} catch (LivroExiste e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		l2.adicionaExemplar();
+		
+		
+		/*Livros l1 = new Livros("A", "A", "A");
+		Livros l2 = new Livros("B", "B", "A");
+		acervo.adicionaLivro(l1);
+		acervo.adicionaLivro(l2);*/
+		
 		
 		Professor p1 = new Professor("C", "C");
 		p1.setNome("Teste");
@@ -164,6 +256,37 @@ public class Principal {
 		
 		
 		switch(opcao) {
+		case 1: 
+			System.out.println("1- Login");
+			System.out.println("2- Registre-se");
+			int op = scan.nextInt();
+			
+			switch(op) {
+			case 1:
+				System.out.println("Insira eu ID:");
+				int id = scan.nextInt();
+				
+				if(loginAluno(id)) {
+					System.out.println("1- Emprestar livro");
+					System.out.println("2- Devolver livro");
+					int opcao4 = scan.nextInt();
+					break;
+				}
+				else {
+					System.out.println("ID inexistente.");
+				}
+			break;
+			
+			case 2:
+				System.out.println("Registro Aluno");
+				adicionaAluno();
+				break;
+			}
+		break;
+		
+		case 2:
+			System.out.println("Ainda não implementado");
+			break;
 		case 3:
 			
 			//Aqui ta comentado so pra facilitar na hora de ficar inserindo
@@ -188,6 +311,7 @@ public class Principal {
 			System.out.println("1- Cadastrar");
 			System.out.println("2- Remover");
 			System.out.println("3- Listar ou Buscar");
+			System.out.println("4- Logout");
 			int opcao2 = scan.nextInt();
 			switch(opcao2) {
 			//Funcao pra cadastrar
@@ -208,7 +332,13 @@ public class Principal {
 					break;
 				case 3:
 					System.out.println("Cadastro de Livros");
-					adicionaLivro();
+					try {
+						adicionaLivro();
+					} catch (LivroExiste e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
 					break;
 				}
 			break;
@@ -218,8 +348,8 @@ public class Principal {
 				System.out.println("1- Remover Aluno");
 				System.out.println("2- Remover Professor");
 				System.out.println("3- Remover Livro");
-				int op = scan.nextInt();
-				switch(op) {
+				int op1 = scan.nextInt();
+				switch(op1) {
 				
 				case 1:
 					System.out.println("Remover aluno");
@@ -236,6 +366,7 @@ public class Principal {
 			case 3:
 				System.out.println("1- Listar livros");
 				System.out.println("2- Listar usuários cadastrados");
+				System.out.println("3- Buscar livro");
 				opcao = scan.nextInt();
 				switch(opcao) {
 				case 1: 
@@ -245,6 +376,11 @@ public class Principal {
 				case 2:
 					System.out.println("Usuários");
 					listarUsuarios();
+					break;
+				case 3:
+					System.out.println("Insira o Nome ou o Autor do Livro desejado:");
+					String informacao = scan.next();
+					buscaLivro(informacao);
 				}
 			}
 		}

@@ -3,7 +3,7 @@ import biblioteca.*;
 
 public class Bibliotecario extends Usuarios {
 
-	String nome = "Bibliotecario";
+	String nome = "Bibliotecário";
 	String email = "admin@biblioteca.com";
 	String senha = "admin";
 	
