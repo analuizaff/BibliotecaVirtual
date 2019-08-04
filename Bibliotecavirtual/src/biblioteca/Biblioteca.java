@@ -1,9 +1,13 @@
 package biblioteca;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import biblioteca.Livros;
+import usuario.Aluno;
+import usuario.Professor;
+import usuario.Usuarios;
 
 
 public class Biblioteca {
@@ -89,8 +93,22 @@ public class Biblioteca {
 			}
 		}
 		if(encontrado == false) {
-			System.out.println("Livro n�o encontrado ou indispon�vel!");
+			System.out.println("Livro nao encontrado ou indisponivel!");
 		}
+	}
+	
+	public static void emprestimoLivroA(Livros livro, Aluno aluno) {
+		LocalDateTime datadehoje = LocalDateTime.now();
+		livro.setDataEmprestimo(datadehoje);
+		livro.setUsuarioEmprestado(aluno);
+		livro.setUsuarioEmprestadoID(aluno.getId());
+	}
+	
+	public static void emprestimoLivroP(Livros livro, Professor professor) {
+		LocalDateTime datadehoje = LocalDateTime.now();
+		livro.setDataEmprestimo(datadehoje);
+		livro.setUsuarioEmprestado(professor);
+		livro.setUsuarioEmprestadoID(professor.getId());
 	}
 
 }

@@ -1,5 +1,6 @@
 package usuario;
 
+import biblioteca.Biblioteca;
 import biblioteca.Livros;
 
 public class Professor extends Usuarios {
@@ -9,8 +10,8 @@ public class Professor extends Usuarios {
 	private static int DISPONIVEL = 10;
 	
 	
-	public Professor(String email, String senha) {
-		super(email, senha);
+	public Professor(String nome, String email, String senha) {
+		super(nome, email, senha);
 		this.id = idProfessor;
 		idProfessor++;
 	}
@@ -47,10 +48,15 @@ public class Professor extends Usuarios {
 		return s;
 	}
 
-	@Override
-	public void emprestimo(Livros livro) {
-		// TODO Auto-generated method stub
-		
+	public void emprestimo(Livros livro, Professor professor) {
+		Livros livroEmprestimo = livro;
+		if(livroEmprestimo.getContadorId() != 0) {
+			System.out.println("Livro disponível!");
+			Biblioteca.emprestimoLivroP(livroEmprestimo, professor);
+			System.out.println("Livro: '" + livroEmprestimo.getTitulo() + "' emprestado com sucesso.");
+			System.out.println("Data:" + livroEmprestimo.getDataEmprestimo());
+			professor.emprestimoAumenta();
+		}
 	}
 
 	@Override
@@ -74,6 +80,18 @@ public class Professor extends Usuarios {
 	public Object getId(int indice) {
 		
 		return null;
+	}
+
+	@Override
+	public void emprestimo(Livros livro, Aluno usuario) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void emprestimo(Livros livro, Usuarios aluno) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

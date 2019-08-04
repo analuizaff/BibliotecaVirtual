@@ -9,8 +9,8 @@ public class Bibliotecario extends Usuarios {
 	
 	Registro bibliotecario;
 	
-	public Bibliotecario(String email, String senha) {
-		super(email, senha);
+	public Bibliotecario(String nome, String email, String senha) {
+		super(nome, email, senha);
 	}
 
 	
@@ -47,7 +47,7 @@ public class Bibliotecario extends Usuarios {
 
 
 	@Override
-	public void emprestimo(Livros livro) {
+	public void emprestimo(Livros livro, Usuarios usuario) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -71,6 +71,13 @@ public class Bibliotecario extends Usuarios {
 	public Livros verifica(Livros livro) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public void emprestimo(Livros livro, Aluno usuario) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

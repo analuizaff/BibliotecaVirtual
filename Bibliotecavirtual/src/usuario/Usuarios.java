@@ -7,10 +7,12 @@ public abstract class Usuarios implements Procedimento {
 	String nome;
 	String email;
 	String senha;
+	int emprestimo;
 	
-	public Usuarios(String email, String senha) {
+	public Usuarios(String nome, String email, String senha) {
 		this.email = email;
 		this.senha = senha;
+		this.nome = nome;
 	}
 	
 	public void setLogin(String email, String senha) {
@@ -40,6 +42,14 @@ public abstract class Usuarios implements Procedimento {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public void emprestimoAumenta() {
+		emprestimo++;
+	}
+	
+	public int getEmprestimo() {
+		return emprestimo;
 	}
 	
 	/*
