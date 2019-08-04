@@ -33,6 +33,14 @@ public class Livros {
 		
 		
 	}
+	
+	public void removeExemplar(int idexemplar) {//remove exemplares do livro pelo id do exemplar
+		qtdExemplares--;
+		idlivros.remove(idexemplar);
+		qtdExemplares--;
+		exemplar.remove(idexemplar);
+		System.out.println("removeu exemplar" );
+	}
 
 	public String getTitulo() {
 		return titulo;
