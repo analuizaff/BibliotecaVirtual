@@ -19,12 +19,12 @@ public class Aluno extends Usuarios {
 		return id;
 	}
 
-	//Aqui ainda nao sei como vai ficar, mas a ideia era toda vez que chamar a funcao emprestimo
+	//Aqui ainda nao sei como vai ficar, mas a ideia era toda vez que chamar a funcao devolucao
 	//Acrescenta 1 de disponivel
 	@Override
 	public void devolucao() {
 		if(DISPONIVEL==5) {
-			System.out.println("O aluno não tem livros para devolver.");
+			System.out.println("O aluno nï¿½o tem livros para devolver.");
 		}
 		else {
 			DISPONIVEL++;
@@ -37,7 +37,7 @@ public class Aluno extends Usuarios {
 	@Override
 	public void emprestimo() {
 		if(DISPONIVEL<=0) {
-			System.out.println("Limite de empréstimos atingidos.");
+			System.out.println("Limite de emprï¿½stimos atingidos.");
 		}
 		else {
 			DISPONIVEL--;

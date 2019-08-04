@@ -9,7 +9,7 @@ import biblioteca.Livros;
 public class Biblioteca {
 	public static List <Livros> acervo = new ArrayList <Livros>();;
 	static List <String> titulosExistentes = new ArrayList <String> (); //só guarda o titulo do meu livro apenas para verificações futuras
-	private static int contadorId = 0;
+	private static int contadorId = -1; //todos os livros terão um um id de 0 a n. esse id será incrementado toda vez que for criado um novo livro, assim o id tbm é a posicao que o livro esta guardado no array
 	
 	public static void adicionaLivro(Livros livro) throws LivroExiste{ //esse metodo adiciona um livro a minha biblioteca. esse livro n será um obj de biblioteca.
 		// a exceção livroexiste n permite adicionar um livro já existente
@@ -20,15 +20,21 @@ public class Biblioteca {
 				}
 			}	
 		}	
-		contadorId ++;
+		contadorId++;
 		acervo.add(livro); 
 		titulosExistentes.add(livro.getTitulo());
 	}
-	public static void ListaLivros() {
+
+	public static void removeLivro(int id) {//remove livro por id
+		acervo.remove(id);	
+	}
+	
+	public static void ListaLivros() {//imprime todos os livro da biblioteca
 		for (int i=0; i < acervo.size(); i++) {
 			System.out.println(acervo.get(i).toString()+ "\n");
 		}
 	}
+	
 
 	public static List<Livros> getAcervo() {
 		return acervo;
@@ -83,7 +89,7 @@ public class Biblioteca {
 			}
 		}
 		if(encontrado == false) {
-			System.out.println("Livro n�o encontrado ou indispon�vel!");
+			System.out.println("Livro n�o encontrado ou indispon�vel!");
 		}
 	}
 
