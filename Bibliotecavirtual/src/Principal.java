@@ -1,3 +1,4 @@
+
 import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -128,13 +129,15 @@ public class Principal {
 		}
 	}
 	
+	//@Parametro informacao recebe o Titulo ou o Autor p realizar a busca
 	private static void buscaLivro(String informacao) {
+		/*
 		Livros livro;
 		boolean encontrado = false;
 		int i;
 		int indiceEncontrado;
 		for(i=0;i<acervo.quantidadeLivro();i++) {
-			livro = acervo.getLivro(i);
+			livro = acervo.getLivro(i); 
 			if(livro.getTitulo().equalsIgnoreCase(informacao)) {
 				System.out.println("Livro encontrado!");
 				System.out.println(livro.toString());
@@ -151,6 +154,8 @@ public class Principal {
 		if(encontrado == false) {
 			System.out.println("Livro não encontrado!");
 		}
+		*/
+		Biblioteca.buscaLivro(informacao);
 	}
 	
 	private static boolean loginAluno(String email, String senha) {

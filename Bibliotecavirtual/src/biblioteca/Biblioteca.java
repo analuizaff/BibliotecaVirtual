@@ -54,14 +54,38 @@ public class Biblioteca {
 		Biblioteca.contadorId = contadorId;
 	}
 	
-	public int quantidadeLivro() {
+	public static int quantidadeLivro() {
 		return acervo.size();
 	}
 	
-	public Livros getLivro(int indice) {
+	public static Livros getLivro(int indice) {
 		return acervo.get(indice);
 	}
 	
+	public static void buscaLivro(String informacao) {
+		Livros livro;
+		boolean encontrado = false;
+		int i;
+		int indiceEncontrado;
+		for(i=0;i<Biblioteca.quantidadeLivro();i++) {
+			livro = Biblioteca.getLivro(i); 
+			if(livro.getTitulo().equalsIgnoreCase(informacao)) {
+				System.out.println("Livro encontrado!");
+				System.out.println(livro.toString());
+				encontrado = true;
+				break;
+			}
+			else if(livro.getAutor().equalsIgnoreCase(informacao)) {
+				System.out.println("Livro encontrado!");
+				System.out.println(livro.toString());
+				encontrado = true;
+				break;
+			}
+		}
+		if(encontrado == false) {
+			System.out.println("Livro não encontrado ou indisponível!");
+		}
+	}
 
 }
 
