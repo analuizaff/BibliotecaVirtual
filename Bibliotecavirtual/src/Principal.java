@@ -211,6 +211,10 @@ public class Principal {
 		Biblioteca.removeLivro(id);
 	}
 	
+	private static void removeExemplar(int id) {
+		//Livros.
+	}
+	
 	public static void main(String[] args) {
 		
 		//Declaracao
