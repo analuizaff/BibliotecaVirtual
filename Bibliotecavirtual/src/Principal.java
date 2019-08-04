@@ -192,12 +192,23 @@ public class Principal {
 	
 	//Funcao remove aluno
 	private static void removeAluno() {
-		//Vou implementar
+		System.out.println("Insira o ID do Aluno a ser removido");
+		int id = scan.nextInt();
+		System.out.println("Deseja remover o Aluno ID " + id + "?");
+		System.out.println("1- Sim // 2- Não");
+		int op = scan.nextInt();
+		if(op==1) {
+			registroAluno.removeAluno(id);
+			System.out.println("Aluno removido com sucesso.");
+		}
+		else {
+			return;
+		}
 	}
 	
 	//Funcao remove Livro
-	private static void removeLivro() {
-		//Vou implementar
+	private static void removeLivro(int id) {
+		Biblioteca.removeLivro(id);
 	}
 	
 	public static void main(String[] args) {
@@ -208,7 +219,6 @@ public class Principal {
 		acervo = new Biblioteca();
 		
 		//Inserido alguns livros, alunos e usuarios pra nao ficar inserindo manual
-		
 		Livros l1 = new Livros("java para burros", "ana", "3", "j567");
 		try {
 			Biblioteca.adicionaLivro(l1);
@@ -391,13 +401,20 @@ public class Principal {
 				switch(op1) {
 				
 				case 1:
-					System.out.println("Remover aluno");
+					System.out.println("Remover Aluno");
 					break;
 					
 				case 2:
 					System.out.println("Remover Professor");
 					removeProfessor();
 					break;
+				case 3:
+					System.out.println("Remover Livro");
+					System.out.println("Insira o ID do Livro a ser removido.");
+					System.out.println("Ao remover, todos os exemplares também serão removidos.");
+					int id = scan.nextInt();
+					removeLivro(id);
+					System.out.println("Livro removido com sucesso!");
 				}
 				
 			//Funcao pra listar livros ou todos usuarios cadastrados

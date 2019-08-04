@@ -10,7 +10,8 @@ public class Livros {
 	private String autor;
 	private String edicao;
 	private List <LivroExemplar> exemplar = new ArrayList<LivroExemplar>();
-	private int id =0;
+	private int id;
+	private static int idLivros = 0;
 	private int qtdExemplares = 0;
 	
 	private static int contadorId =0;
@@ -21,7 +22,8 @@ public class Livros {
 		this.autor = autor;
 		this.edicao = edicao;
 		this.code = code;
-		this.id++;
+		this.id = idLivros;
+		idLivros++;
 	}
 	public void adicionaExemplar(){	//adiciona Exemplar ao meu livro
 		contadorId++;
@@ -76,6 +78,6 @@ public class Livros {
 	
 	@Override
 	public String toString() {
-		return "Livros [" +getTitulo()+  ", autor:" +getAutor()+ ", edicaoo:" +getEdicao()+ ", id: " +getId()+ ",exemplares: " +qtdExemplares+"]" ;
+		return "Livros [" +getTitulo()+  ", autor:" +getAutor()+ ", edicaoo:" +getEdicao()+ ", id: " + getId() + ",exemplares: " +qtdExemplares+"]" ;
 	}
 }
