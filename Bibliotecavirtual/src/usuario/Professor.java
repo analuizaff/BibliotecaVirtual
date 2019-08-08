@@ -1,6 +1,7 @@
 package usuario;
 
 import biblioteca.Biblioteca;
+import biblioteca.LivroExemplar;
 import biblioteca.Livros;
 
 public class Professor extends Usuarios {
@@ -20,27 +21,6 @@ public class Professor extends Usuarios {
 		return id;
 	}
 	
-	@Override
-	public void devolucao() {
-		if(DISPONIVEL==10) {
-			System.out.println("O professor não tem livros para devolver.");
-		}
-		else {
-			DISPONIVEL++;
-		}
-		
-	}
-
-	@Override
-	public void emprestimo() {
-		if(DISPONIVEL<=0) {
-			System.out.println("Limite de empréstimos atingidos.");
-		}
-		else {
-			DISPONIVEL--;
-		}
-		
-	}
 	
 	@Override
 	public String toString() {
@@ -48,50 +28,35 @@ public class Professor extends Usuarios {
 		return s;
 	}
 
+	@Override
 	public void emprestimo(Livros livro, Professor professor) {
-		Livros livroEmprestimo = livro;
-		if(livroEmprestimo.getContadorId() != 0) {
-			System.out.println("Livro disponível!");
-			Biblioteca.emprestimoLivroP(livroEmprestimo, professor);
-			System.out.println("Livro: '" + livroEmprestimo.getTitulo() + "' emprestado com sucesso.");
-			System.out.println("Data:" + livroEmprestimo.getDataEmprestimo());
-			professor.emprestimoAumenta();
+		int i;
+		livro.LivroExemplar(livro);
+		if(DISPONIVEL<=0) { //primeiro verifica se aluno ainda pode  pegar livros
+			
+			System.out.println("Limite de emprestimos atingidos.");
 		}
-	}
-
-	@Override
-	public void devolucao(Livros livro) {
-		// TODO Auto-generated method stub
+		else { // se aluno ainda pode pegar livro então verificará se existem livros disponiveis
 		
-	}
-
-	@Override
-	public Livros busca(String titulo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Livros verifica(Livros livro) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Object getId(int indice) {
-		
-		return null;
-	}
-
-	@Override
-	public void emprestimo(Livros livro, Aluno usuario) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void emprestimo(Livros livro, Usuarios aluno) {
-		// TODO Auto-generated method stub
-		
+		LivroExemplar exemplardisponivel = null;
+		if(livro.LivroExemplar(livro) == null) {
+			return;
+		}
+			else{//se existir livros disponiveis guarda o livro exemplar disponivel
+				exemplardisponivel = livro.LivroExemplar(livro);
+				Livros livroEmprestimo = livro;
+			
+				Biblioteca.emprestimoLivroP(livroEmprestimo, professor);
+				System.out.println("Livro: '" + livroEmprestimo.getTitulo() + "' emprestado com sucesso.");
+				System.out.println("Data:" + livroEmprestimo.getDataEmprestimo());
+				System.out.println("---------------------------------");
+				professor.emprestimoAumenta();
+				livro.decresceContadorExemplares(livroEmprestimo);
+				livroEmprestimo.setUsuarioEmprestadoID(professor.getId());	
+				exemplardisponivel.setDisponibilidade(false);//seta a disponibilidade do exemplar para false
+				DISPONIVEL--;
+			}
+		}
 	}
 
 }

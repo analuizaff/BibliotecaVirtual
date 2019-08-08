@@ -1,8 +1,8 @@
 package usuario;
 
-import biblioteca.Procedimento;
+import biblioteca.Livros;
 
-public abstract class Usuarios implements Procedimento {
+public abstract class Usuarios {
 	
 	String nome;
 	String email;
@@ -51,16 +51,10 @@ public abstract class Usuarios implements Procedimento {
 	public int getEmprestimo() {
 		return emprestimo;
 	}
-	
-	/*
-	@Override
-	public String toString() {
-		String s = "" + getEmail() + ";" + getSenha();
-		return s;
-	}*/
-	
-	public abstract void devolucao();
-	
-	public abstract void emprestimo();
-	
+
+	public void emprestimo(Livros livro, Aluno aluno) {
+	}
+
+	public void emprestimo(Livros livro, Professor professor) {
+	}
 }

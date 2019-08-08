@@ -2,12 +2,13 @@ package usuario;
 
 import biblioteca.Biblioteca;
 import biblioteca.Livros;
+import biblioteca.LivroExemplar;
 
 public class Aluno extends Usuarios {
 
 	private int id;
 	private static int idAluno = 0;
-	private static int DISPONIVEL = 5;
+	private int DISPONIVEL = 5;
 	
 	
 	public Aluno(String nome, String email, String senha) {
@@ -19,31 +20,6 @@ public class Aluno extends Usuarios {
 	public int getId() {
 		return id;
 	}
-
-	//Aqui ainda nao sei como vai ficar, mas a ideia era toda vez que chamar a funcao devolucao
-	//Acrescenta 1 de disponivel
-	@Override
-	public void devolucao() {
-		if(DISPONIVEL==5) {
-			System.out.println("O aluno nï¿½o tem livros para devolver.");
-		}
-		else {
-			DISPONIVEL++;
-		}
-		
-	}
-
-	//Aqui ainda nao sei como vai ficar, mas a ideia era toda vez que chamar a funcao emprestimo
-	//Decresce 1 de disponivel
-	@Override
-	public void emprestimo() {
-		if(DISPONIVEL<=0) {
-			System.out.println("Limite de emprï¿½stimos atingidos.");
-		}
-		else {
-			DISPONIVEL--;
-		}
-	}
 	
 	@Override
 	public String toString() {
@@ -53,43 +29,37 @@ public class Aluno extends Usuarios {
 
 	@Override
 	public void emprestimo(Livros livro, Aluno aluno) {
-		Livros livroEmprestimo = livro;
-		if(livroEmprestimo.getContadorId() != 0 && livro.getContadorExemplares(livroEmprestimo)> 0) {
-			System.out.println("Livro disponível!");
-			Biblioteca.emprestimoLivroA(livroEmprestimo, aluno);
-			System.out.println("Livro: '" + livroEmprestimo.getTitulo() + "' emprestado com sucesso.");
-			System.out.println("Data:" + livroEmprestimo.getDataEmprestimo());
-			aluno.emprestimoAumenta();
-			livro.decresceContadorExemplares(livroEmprestimo);
-			livroEmprestimo.setUsuarioEmprestadoID(aluno.getId());	
+		int i;
+		livro.LivroExemplar(livro);
+		if(DISPONIVEL<=0) { //primeiro verifica se aluno ainda pode  pegar livros
+			
+			System.out.println("Limite de emprestimos atingidos.");
 		}
-		else {
-			System.out.println("Nao ha exemplares disponiveis!");
+		else { // se aluno ainda pode pegar livro então verificará se existem livros disponiveis
+		
+		LivroExemplar exemplardisponivel = null;
+		if(livro.LivroExemplar(livro) == null) {
+			return;
+		}
+			else{//se existir livros disponiveis guarda o livro exemplar disponivel
+				exemplardisponivel = livro.LivroExemplar(livro);
+				Livros livroEmprestimo = livro;
+			
+				Biblioteca.emprestimoLivroA(livroEmprestimo, aluno);
+				System.out.println("Livro: '" + livroEmprestimo.getTitulo() + "' emprestado com sucesso.");
+				System.out.println("Data:" + livroEmprestimo.getDataEmprestimo());
+				System.out.println("---------------------------------");
+				aluno.emprestimoAumenta();
+				livro.decresceContadorExemplares(livroEmprestimo);
+				livroEmprestimo.setUsuarioEmprestadoID(aluno.getId());	
+				exemplardisponivel.setDisponibilidade(false);//seta a disponibilidade do exemplar para false
+				DISPONIVEL--;
+			}
 		}
 	}
-	
-	@Override
-	public void devolucao(Livros livro) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public Livros busca(String titulo) {
-		// TODO Auto-generated method stub
+	private LivroExemplar livroExemplarDisponivel(Livros livro) {
 		return null;
-	}
-
-	@Override
-	public Livros verifica(Livros livro) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void emprestimo(Livros livro, Usuarios aluno) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

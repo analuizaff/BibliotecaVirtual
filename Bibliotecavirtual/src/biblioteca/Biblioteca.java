@@ -82,18 +82,21 @@ public class Biblioteca {
 			if(livro.getTitulo().equalsIgnoreCase(informacao)) {
 				System.out.println("Livro encontrado!");
 				System.out.println(livro.toString());
+				System.out.println("------------------------");
 				encontrado = true;
 				break;
 			}
 			else if(livro.getAutor().equalsIgnoreCase(informacao)) {
 				System.out.println("Livro encontrado!");
 				System.out.println(livro.toString());
+				System.out.println("------------------------");
 				encontrado = true;
 				break;
 			}
 		}
 		if(encontrado == false) {
 			System.out.println("Livro nao encontrado ou indisponivel!");
+			System.out.println("---------------------------");
 		}
 	}
 	
@@ -109,6 +112,9 @@ public class Biblioteca {
 		livro.setDataEmprestimo(datadehoje);
 		livro.setUsuarioEmprestado(professor);
 		livro.setUsuarioEmprestadoID(professor.getId());
+	}
+
+	public static void emprestimoLivroA(Livros livroEmprestimo, Professor professor) {	
 	}
 
 }

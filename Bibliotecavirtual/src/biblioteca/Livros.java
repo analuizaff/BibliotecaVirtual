@@ -26,7 +26,7 @@ public class Livros {
 	private int usuarioEmprestadoID;
 	
 	private static int contadorId =0;
-	private static ArrayList <Integer> idlivros = new ArrayList <Integer> ();//sÃ³ guarda os ids dos exeplres, feito apenas para verificaÃ§Ãµes futuras
+	private static ArrayList <Integer> idlivros = new ArrayList <Integer> ();//só guarda os ids dos exeplres, feito apenas para verificações futuras
 	
 	public Livros(String titulo, String autor, String edicao, String code) {
 		this.titulo = titulo;
@@ -40,9 +40,7 @@ public class Livros {
 		contadorId++;
 		idlivros.add(contadorId);
 		qtdExemplares++;
-		exemplar.add (new LivroExemplar(titulo, autor, edicao, contadorId));
-		
-		
+		exemplar.add (new LivroExemplar(titulo, autor, edicao, contadorId));	
 	}
 	
 	public void removeExemplar(int idexemplar) {//remove exemplares do livro pelo id do exemplar
@@ -51,6 +49,29 @@ public class Livros {
 		exemplar.remove(idexemplar);
 		System.out.println("Exemplar removido com sucesso." );
 	}
+	public LivroExemplar LivroExemplar(Livros livro) {//busca um livro disponivel e retorna o objeto livro exemplar. metodo apenas pra ser usado no emprestimo
+		LivroExemplar exemplardisponivel = null;
+		for (int i=0; i<exemplar.size(); i++) {
+			if (exemplar.get(i).isDisponibilidade() == true){
+				exemplardisponivel = exemplar.get(i);
+				return exemplardisponivel;
+			}
+		}
+		return exemplardisponivel;
+	}
+	
+	public boolean verificaDisponibilidade(Livros livro) { //verifica se há livros disponiveis e returna true se existe
+		for (LivroExemplar livroexemplar : livro.getExemplar()) {
+			if (livroexemplar.isDisponibilidade() == true) {
+				System.out.println("Livro disponivel!");
+				return true;
+			}
+		}
+		System.out.println("Nao ha exemplares deste livro disponiveis para emprestimo!");
+		System.out.println("---------------------------");
+		return false;
+	}
+	
 
 	public String getTitulo() {
 		return titulo;
@@ -109,12 +130,6 @@ public class Livros {
 	public static int getQtdExemplaresFinal() {
 		return qtdExemplaresFinal;
 	}
-	
-	/*
-	@Override
-	public String toString() {
-		return "Livros [" +getTitulo()+  ", autor:" +getAutor()+ ", edicaoo:" +getEdicao()+ ", id: " + getId() + ",exemplares: " +qtdExemplares+"]" ;
-	}*/
 	
 	@Override
 	public String toString() {

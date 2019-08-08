@@ -77,20 +77,19 @@ public class Principal {
 				livro.adicionaExemplar();
 			}
 		} catch (LivroExiste e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
 	//Funcao listar usuarios
 	private static void listarUsuarios() {
-		System.out.println("\t\tAlunos");
+		System.out.println("                  Alunos");
 		for(int i=0;i<registroAluno.quantidadeAluno();i++) {
 			Aluno aluno = (Aluno) registroAluno.getAluno(i);
 			//System.out.printf("%s;%s;%s\n", aluno.getNome(), aluno.getEmail(), aluno.getSenha());
 			System.out.println("ID: " + aluno.getId() + " " + aluno.toString());
 		}
-		System.out.println("\t\tProfessores");
+		System.out.println("-------------- Professores -----------------");
 		for(int i=0;i<registroProfessor.quantidadeProfessor();i++) {
 			Professor professor = (Professor) registroProfessor.getProfessor(i);
 			//System.out.printf("%s;%s;%s\n", professor.getNome(), professor.getEmail(), professor.getSenha());
@@ -128,6 +127,9 @@ public class Principal {
 		Biblioteca.buscaLivro(informacao);
 	}
 	
+	/*Login aluno recebendo como @param email e senha desse aluno e verificando
+	 *Se esse e-mail e senha estao cadastrado
+	 */
 	private static boolean loginAluno(String email, String senha) {
 		Aluno aluno;
 		boolean login = false;
@@ -146,6 +148,9 @@ public class Principal {
 		return login;
 	}
 	
+	/* Funcao login recebendo como @param email e senha desse professor e verificando
+	 * Se esse email e senha estao cadastrados
+	 */
 	private static boolean loginProfessor(String email, String senha) {
 		Professor professor;
 		boolean login = false;
@@ -164,7 +169,7 @@ public class Principal {
 		return login;
 	}
 	
-	//Funcao remove aluno
+	//Remove aluno com base no ID que sera inserido
 	private static void removeAluno() {
 		System.out.println("Insira o ID do Aluno a ser removido");
 		int id = scan.nextInt();
@@ -180,16 +185,19 @@ public class Principal {
 		}
 	}
 	
-	//Funcao remove Livro
+	//Remove livro recebendo como parametro o ID do Livro que sera removido
 	private static void removeLivro(int id) {
 		Biblioteca.removeLivro(id);
 	}
 	
+	//Remover exemplar recebendo como @param o ID do Livro que tera exemplar removido
 	private static void removeExemplar(int id) {
 		Livros livro = acervo.getLivro(id);
 		livro.removeExemplar(id);
 	}
 	
+	//Emprestimos de livro pelo aluno, recebendo como parametro o ID do Aluno
+	//Para poder encontralo no Array de registro
 	private static void emprestarLivroAluno(int idAluno) {
 		System.out.println("=============== Lista de Livros ==============");
 		listarLivros();
@@ -197,25 +205,33 @@ public class Principal {
 		System.out.println("\nInsira o ID do Livro que voce deseja pegar emprestado:");
 		int idLivro = scan.nextInt();
 		Livros livro = Biblioteca.getLivro(idLivro);
+		livro.LivroExemplar(livro);
+		livro.verificaDisponibilidade(livro);
+		
 		Aluno aluno = (Aluno) registroAluno.getAluno(idAluno);
-		System.out.println("---------------------------");
 		aluno.emprestimo(livro, aluno);
-		System.out.println("---------------------------");
 	}
 	
+	//Emprestimos de livro pelo professor, recebendo como parametro o ID do Professor
+	//Para poder encontralo no Array de registro
 	private static void emprestarLivroProfessor(int idProfessor) {
 		System.out.println("=============== Lista de Livros ==============");
 		listarLivros();
 		System.out.println("==============================================");
-		System.out.println("\nInsira o ID do Livro que voce deseja pegar emprestado.");
+		System.out.println("\nInsira o ID do Livro que voce deseja pegar emprestado:");
 		int idLivro = scan.nextInt();
 		Livros livro = Biblioteca.getLivro(idLivro);
+		livro.LivroExemplar(livro);
+		livro.verificaDisponibilidade(livro);
+		
 		Professor professor = (Professor) registroProfessor.getProfessor(idProfessor);
-		System.out.println("---------------------------");
 		professor.emprestimo(livro, professor);
-		System.out.println("---------------------------");
 	}
 	
+	/*Lista o emprestimo de um usuario especifico recebendo como parametro
+	 * a opcao digita previamente para aluno ou professor
+	 * e o id para poder identificar o aluno ou professor no array de registro
+	 */
 	private static void listarEmprestimosUsuario(int opcao, int id) {
 		switch(opcao) {
 		case 1:
@@ -226,7 +242,6 @@ public class Principal {
 				System.out.println("O aluno nao efetuou nenhum emprestimo!");
 				System.out.println("---------------------------");
 			}
-			//System.out.println(aluno.getEmprestimo());
 			for(int i=0;i<acervo.quantidadeLivro();i++) {
 					Livros livro = Biblioteca.getLivro(i);
 					if(livro.getDataEmprestimo()!=null && livro.getUsuarioEmprestadoID(aluno) == id) {
@@ -244,6 +259,7 @@ public class Principal {
 				System.out.println("---------------------------");
 			}
 			for(int i=0;i<professor.getEmprestimo();i++) {
+				System.out.println("Teste");
 					Livros livro = Biblioteca.getLivro(i);
 					if(livro.getDataEmprestimo()!=null && livro.getUsuarioEmprestadoID(professor) == id) {
 						System.out.println("ID: "+ livro.getId() + " Titulo: '" + livro.getTitulo() + "' Data: " + livro.getDataEmprestimo());
@@ -253,12 +269,12 @@ public class Principal {
 		}
 	}
 	
+	//Metodo apenas com livros prefixados para facilitar o teste do programa
 	public static void livrosPrefixados() {
 		Livros l1 = new Livros("java para burros", "ana", "3", "CJ001");
 		try {
 			Biblioteca.adicionaLivro(l1);
 		} catch (LivroExiste e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		l1.adicionaExemplar();
@@ -268,7 +284,6 @@ public class Principal {
 		try {
 			Biblioteca.adicionaLivro(l2);
 		} catch (LivroExiste e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		l2.adicionaExemplar();
@@ -277,7 +292,6 @@ public class Principal {
 		try {
 			Biblioteca.adicionaLivro(l3);
 		} catch (LivroExiste e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		l3.adicionaExemplar();
@@ -286,7 +300,6 @@ public class Principal {
 		try {
 			Biblioteca.adicionaLivro(l4);
 		} catch (LivroExiste e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		l4.adicionaExemplar();
@@ -295,16 +308,15 @@ public class Principal {
 		try {
 			Biblioteca.adicionaLivro(l5);
 		} catch (LivroExiste e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		l5.adicionaExemplar();
 	}
 	
+	//Metodo com usuarios prefixados para facilitar o teste do programa
 	public static void usuariosPrefixados() {
 		//Professor p1 = new Professor("Vera", "vera@ufabc.edu.br", "vera123");
 		Professor p1 = new Professor("1", "1", "1");
-		//p1.setNome("Teste");
 		Professor p2 = new Professor("Marcos", "marcos@ufabc.edu.br", "marcos123");
 		Professor p3 = new Professor("Carla", "carla@ufabc.edu.br", "carla123");
 		Professor p4 = new Professor("Joao", "joao@ufabc.edu.br", "joao123");
@@ -318,7 +330,6 @@ public class Principal {
 		
 		//Aluno a1 = new Aluno("Guilherme", "guilherme@aluno.ufabc.edu.br", "guilherme123");
 		Aluno a1 = new Aluno("2", "2", "2");
-		//a1.setNome("Teste");
 		Aluno a2 = new Aluno("Vinicius", "vinicius@aluno.ufabc.edu.br", "vinicius123");
 		Aluno a3 = new Aluno("Beatriz", "beatriz@aluno.ufabc.edu.br", "beatriz123");
 		Aluno a4 = new Aluno("Ana", "ana@aluno.ufabc.edu.br", "ana123");
@@ -360,10 +371,9 @@ public class Principal {
 		
 			switch(opcao) {
 			
-			case 1: 
+			case 1:
 				menuAluno();
 				break;
-		
 			case 2:
 				menuProfessor();
 				break;
@@ -377,12 +387,14 @@ public class Principal {
 		
 	}
 	
+	//Menu
 	public static void menuListarOuBuscar() {
 		System.out.println("---------------------------");
 		System.out.println("1- Listar livros");
 		System.out.println("2- Listar usuários cadastrados");
 		System.out.println("3- Buscar livro");
 		System.out.println("4- Listar emprestimos de Usuario");
+		System.out.println("5- Voltar");
 		System.out.println("---------------------------");
 		int opcao = scan.nextInt();
 		switch(opcao) {
@@ -397,7 +409,7 @@ public class Principal {
 			System.out.println("==============================================");
 			break;
 		case 3:
-			System.out.println("---------------------------");
+			System.out.println("--------- Busca -----------");
 			System.out.println("Insira o Nome ou o Autor do Livro desejado:");
 			System.out.println("---------------------------");
 			String informacao = scan.next();
@@ -419,6 +431,7 @@ public class Principal {
 		}
 	}
 	
+	//Menu para remocao
 	public static void menuRemove() {
 		System.out.println("---------------------------");
 		System.out.println("1- Remover Aluno");
@@ -430,13 +443,15 @@ public class Principal {
 		switch(op1) {
 		
 		case 1:
-			System.out.println("Remover Aluno");
+			System.out.println("---- Remover Aluno ----");
 			removeAluno();
+			System.out.println("-----------------------");
 			break;
 			
 		case 2:
-			System.out.println("Remover Professor");
+			System.out.println("---- Remover Professor ----");
 			removeProfessor();
+			System.out.println("---------------------------");
 			break;
 		case 3:
 			System.out.println("------ Remover Livro ------");
@@ -461,38 +476,41 @@ public class Principal {
 		}
 	}
 	
+	//menu para cadastro
 	public static void menuCadastroBibliotecario() {
 		System.out.println("----- Cadastro -----");
 		System.out.println("1- Cadastrar Aluno");
 		System.out.println("2- Cadastrar Professor");
 		System.out.println("3- Cadastrar Livro");
 		System.out.println("--------------------");
-		//System.out.println("4- Cadastrar Exemplar");
 		int opcao3 = scan.nextInt();
 		switch(opcao3) {
 		case 1:
-			System.out.println("Cadastro de Aluno");
+			System.out.println("---- Cadastro de Aluno ----");
 			adicionaAluno();
+			System.out.println("Aluno cadastrado com sucesso!");
+			System.out.println("---------------------------");
 			break;
 		case 2:
-			System.out.println("Cadastro de Professor");
+			System.out.println("-- Cadastro de Professor --");
 			adicionaProfessor();
+			System.out.println("Aluno cadastrado com sucesso!");
+			System.out.println("---------------------------");
 			break;
 		case 3:
-			System.out.println("Cadastro de Livros");
+			System.out.println("---- Cadastro de Livros ----");
 			try {
 				adicionaLivro();
 			} catch (LivroExiste e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			break;
-		case 4:
-			System.out.println("Cadastro de Exemplar");
+			System.out.println("Livro cadastrado com sucesso!");
+			System.out.println("---------------------------");
 			break;
 		}
 	}
 	
+	//Menu do bibliotecario
 	public static void menuBibliotecario() {
 		System.out.println("====== Login Bibliotecario ======");
 		System.out.println("Email:");
@@ -505,24 +523,28 @@ public class Principal {
 			System.out.println("Login efetuado com sucesso!");
 			
 			System.out.println("---------------------------");
-			System.out.println("Bem vindo, bibliotecario.");
-			System.out.println("1- Cadastrar");
-			System.out.println("2- Remover");
-			System.out.println("3- Listar ou Buscar");
-			System.out.println("4- Logout");
-			System.out.println("---------------------------");
-			int opcao2 = scan.nextInt();
-			switch(opcao2) {
-			case 1:
-				menuCadastroBibliotecario();
-				break;
-			case 2:
-				menuRemove();
-				break;
-			case 3:
-				menuListarOuBuscar();
-				break;
-			}
+			System.out.println("Bem vindo, bibliotecario.\n");
+			int opcao2;
+			do {
+				System.out.println("\tBibliotecario");
+				System.out.println("1- Cadastrar");
+				System.out.println("2- Remover");
+				System.out.println("3- Listar ou Buscar");
+				System.out.println("4- Logout");
+				System.out.println("---------------------------");
+				opcao2 = scan.nextInt();
+				switch(opcao2) {
+				case 1:
+					menuCadastroBibliotecario();
+					break;
+				case 2:
+					menuRemove();
+					break;
+				case 3:
+					menuListarOuBuscar();
+					break;
+				}
+			}while(opcao2 != 4);
 		}
 		else {
 			System.out.println("Email ou senha inválidos.");
@@ -530,44 +552,80 @@ public class Principal {
 		}
 	}
 	
+	//Menu do professor
+	
 	public static void menuProfessor() {
-		System.out.println("====== Login Professor ======");
-		System.out.println("Insira seu Email:");
-		String email = scan.next();	
-		System.out.println("Insira sua Senha:");
-		String senha = scan.next();
-		System.out.println("=============================");
+		System.out.println("-------- Professor --------");
+		System.out.println("1- Login");
+		System.out.println("2- Registre-se");
+		System.out.println("3- Voltar");
+		System.out.println("-----------------------");
+		int op = scan.nextInt();
 		
-		if(loginProfessor(email, senha)) {
-			System.out.println("Bem vindo, Professor.");
-			System.out.println("---------------------------");
-			System.out.println("1- Emprestar livro");
-			System.out.println("2- Devolver livro");
-			System.out.println("---------------------------");
-			int opcao4 = scan.nextInt();
-			switch(opcao4) {
-			case 1: 
-				System.out.println("--- Emprestimo de Livro ---");
-				System.out.println("Insira o seu ID: ");
+		switch(op) {
+		case 1:
+			System.out.println("====== Login Professor ======");
+			System.out.println("Insira seu Email:");
+			String email = scan.next();	
+			System.out.println("Insira sua Senha:");
+			String senha = scan.next();
+			System.out.println("=============================");
+		
+			if(loginProfessor(email, senha)) {
+				System.out.println("Bem vindo, Professor.");
 				System.out.println("---------------------------");
-				int idProfessor = scan.nextInt();
-				emprestarLivroProfessor(idProfessor);
-				break;
-			case 2:
-				System.out.println("--- Registre-se Professor ---");
-				adicionaProfessor();
-				System.out.println("---------------------------");
-				System.out.println("Cadastro realizado com sucesso!");
-				System.out.println("---------------------------");
-				break;
+				int opcao4;
+				do {
+					System.out.println("\tProfessor");
+					System.out.println("1- Emprestar livro");
+					System.out.println("2- Devolver livro");
+					System.out.println("3- Buscar livro");
+					System.out.println("4- Listar livros");
+					System.out.println("5- Logout");
+					System.out.println("---------------------------");
+					opcao4 = scan.nextInt();
+					switch(opcao4) {
+					case 1: 
+						System.out.println("--- Emprestimo de Livro ---");
+						System.out.println("Insira o seu ID: ");
+						System.out.println("---------------------------");
+						int idProfessor = scan.nextInt();
+						emprestarLivroProfessor(idProfessor);
+						break;
+					case 2:
+					System.out.println("Nao implementado.");
+					case 3:
+						System.out.println("--------- Busca -----------");
+						System.out.println("Insira o Nome ou o Autor do Livro desejado:");
+						System.out.println("---------------------------");
+						String informacao = scan.next();
+						buscaLivro(informacao);
+						break;
+					case 4:
+						System.out.println("=============== Lista de Livros ==============");
+						listarLivros();
+						System.out.println("==============================================");
+						break;
+					}
+				}while(opcao4 != 5);
 			}
-		}
 		else {
 			System.out.println("Email ou senha invalidos.");
 			System.out.println("---------------------------");
 		}
+		break;
+		
+		case 2:
+			System.out.println("--- Registro Professor ---");
+			adicionaProfessor();
+			System.out.println("Cadastro realizado com sucesso!");
+			System.out.println("---------------------------");
+		break;
+			
+		}
 	}	
 	
+	//Menu do aluno
 	public static void menuAluno() {
 		System.out.println("-------- Aluno --------");
 		System.out.println("1- Login");
@@ -586,30 +644,53 @@ public class Principal {
 			System.out.println("=========================");
 			
 			if(loginAluno(email, senha)) {
-				System.out.println("Bem vindo, Aluno.");
+				System.out.println("Bem vindo, Aluno!");
 				System.out.println("---------------------------");
-				System.out.println("1- Emprestar livro");
-				System.out.println("2- Devolver livro");
-				int opcao4 = scan.nextInt();
-				switch(opcao4) {
-				case 1: 
-					System.out.println("==== Emprestimo de Livro ====");
-					System.out.println("Insira o seu ID: ");
-					int idAluno = scan.nextInt();
-					emprestarLivroAluno(idAluno);
-					break;
-				case 2:
-					System.out.println("Registro Aluno");
-					adicionaAluno();
-					System.out.println("Cadastro realizado com sucesso!");
-					break;
-				}
-				break;
+				int opcao4;
+				do {
+					System.out.println("\tAluno");
+					System.out.println("1- Emprestar livro");
+					System.out.println("2- Devolver livro");
+					System.out.println("3- Buscar livro");
+					System.out.println("4- Listar livros");
+					System.out.println("5- Logout");
+					opcao4 = scan.nextInt();
+					switch(opcao4) {
+					case 1: 
+						System.out.println("==== Emprestimo de Livro ====");
+						System.out.println("Insira o seu ID: ");
+						int idAluno = scan.nextInt();
+						emprestarLivroAluno(idAluno);
+						break;
+					case 2:
+						System.out.println("Nao implementado.");
+						break;
+					case 3:
+						System.out.println("--------- Busca -----------");
+						System.out.println("Insira o Nome ou o Autor do Livro desejado:");
+						System.out.println("---------------------------");
+						String informacao = scan.next();
+						buscaLivro(informacao);
+						break;
+					case 4:
+						System.out.println("=============== Lista de Livros ==============");
+						listarLivros();
+						System.out.println("==============================================");
+						break;
+					}
+				}while(opcao4 != 5);
 			}
 			else {
 				System.out.println("Email ou senha invalidos!");
+				System.out.println("---------------------------");
 			}
+		break;
+		case 2:
+			System.out.println("--- Registro Aluno ---");
+			adicionaAluno();
+			System.out.println("Cadastro realizado com sucesso!");
+			System.out.println("---------------------------");
+		break;
 		}
 	}
-	
 }

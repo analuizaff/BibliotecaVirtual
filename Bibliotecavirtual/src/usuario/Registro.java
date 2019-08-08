@@ -19,23 +19,9 @@ public class Registro{
 		registroAluno.add((Aluno) aluno);
 	}
 	
-	//Aqui ta comentado porque tinha deixado como possivel passar o objeto como parametro
-	//Mas acho que faz mais sentido deixar remover soh por ID
-	/*
-	public void removeProfessor(Usuarios professor) {
-		registroProfessor.remove((Professor) professor);
-	}*/
-	
 	public void removeProfessor(int indice) {
 		registroProfessor.remove(indice);
 	}
-	
-	//Aqui ta comentado porque tinha deixado como possivel passar o objeto como parametro
-	//Mas acho que faz mais sentido deixar remover soh por ID
-	/* 
-	public void removeAluno(Usuarios aluno) {
-		registroAluno.remove((Aluno) aluno);
-	}*/
 	
 	public void removeAluno(int indice) {
 		registroAluno.remove(indice);
@@ -79,14 +65,10 @@ public class Registro{
 		return ID;
 	}
 	
-	//Funcao pra saber a quantidade de professores ja foram cadastrados
-	//E poder usar na hora de limitar o for
 	public int quantidadeProfessor() {
 		return registroProfessor.size();
 	}
 	
-	//Funcao pra saber a quantidade de alunos ja foram cadastrados
-	//E poder usar na hora de limitar o for
 	public int quantidadeAluno() {
 		return registroAluno.size();
 	}
